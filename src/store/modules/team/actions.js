@@ -22,3 +22,16 @@ export function selectTeam(activeTeam) {
     payload: { activeTeam },
   };
 }
+export function openModal() {
+  return {
+    type: '@team/OPEN_MODAL',
+    payload: { teamModalOpen: true },
+  };
+}
+
+export function closeModal() {
+  return {
+    type: '@team/CLOSE_MODAL',
+    payload: { teamModalOpen: false },
+  };
+}

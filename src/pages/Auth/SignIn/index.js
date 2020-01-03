@@ -27,7 +27,7 @@ const SignIn = () => {
         <h1>Welcome!</h1>
 
         <span>E-MAIL</span>
-        <Input type="text" name="email" />
+        <Input type="email" name="email" />
 
         <span>PASSWORD</span>
         <Input type="password" name="password" />

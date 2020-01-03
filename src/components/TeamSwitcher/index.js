@@ -1,14 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Form, Input } from '@rocketseat/unform';
+import {
+  getTeamsRequest,
+  selectTeam,
+  openModal,
+  closeModal,
+} from 'store/modules/team/actions';
 
-import { getTeamsRequest, selectTeam } from 'store/modules/team/actions';
-
-import { Container, TeamList, Team } from './styles';
+import Modal from 'components/Modal';
+import { Container, TeamList, Team, NewTeam } from './styles';
+import Button from 'styles/components/Button';
 
 export default function TeamSwitcher() {
   const dispatch = useDispatch();
   const teams = useSelector(state => state.team.teams);
   const currentTeam = useSelector(state => state.team.activeTeam);
+  const teamModalOpen = useSelector(state => state.team.teamModalOpen);
 
   useEffect(() => {
     dispatch(getTeamsRequest());
@@ -17,7 +25,13 @@ export default function TeamSwitcher() {
   function handleSelectTeam(team) {
     dispatch(selectTeam(team));
   }
-
+  function handleNewTeam() {
+    if (teamModalOpen) {
+      dispatch(closeModal());
+    } else {
+      dispatch(openModal());
+    }
+  }
   return (
     <Container>
       <TeamList>
@@ -33,6 +47,18 @@ export default function TeamSwitcher() {
             />
           </Team>
         ))}
+        <NewTeam onClick={handleNewTeam}>New</NewTeam>
+        {teamModalOpen && (
+          <Modal>
+            <h1>New Team</h1>
+            <Form onSubmit={() => {}}>
+              <span>NAME</span>
+              <Input type="text" name="name" />
+              <Button size="big" type="submit">SAVE</Button>
+              <Button size="small" color="gray" onClick={handleNewTeam}>CLOSE</Button>
+            </Form>
+          </Modal>
+        )}
       </TeamList>
     </Container>
   );

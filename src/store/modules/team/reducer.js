@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   teams: [],
   activeTeam: null,
   loading: false,
+  teamModalOpen: false,
 };
 
 export default function team(state = INITIAL_STATE, action) {
@@ -21,6 +22,13 @@ export default function team(state = INITIAL_STATE, action) {
         break;
       case '@team/SELECT_TEAM':
         draft.activeTeam = action.payload.activeTeam;
+        break;
+      case '@team/OPEN_MODAL':
+        draft.teamModalOpen = true;
+        break;
+      case '@team/CLOSE_MODAL':
+        draft.teamModalOpen = false;
+        break;
       default:
     }
   });
