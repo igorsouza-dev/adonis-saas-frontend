@@ -15,3 +15,10 @@ export function getTeamsFailure() {
     type: '@team/GET_TEAMS_FAILURE',
   };
 }
+
+export function selectTeam(activeTeam) {
+  return {
+    type: '@team/SELECT_TEAM',
+    payload: { activeTeam },
+  };
+}

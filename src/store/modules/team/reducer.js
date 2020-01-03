@@ -2,6 +2,7 @@ import { produce } from 'immer';
 
 const INITIAL_STATE = {
   teams: [],
+  activeTeam: null,
   loading: false,
 };
 
@@ -18,6 +19,8 @@ export default function team(state = INITIAL_STATE, action) {
       case '@team/GET_TEAMS_FAILURE':
         draft.loading = false;
         break;
+      case '@team/SELECT_TEAM':
+        draft.activeTeam = action.payload.activeTeam;
       default:
     }
   });
