@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Form } from '@rocketseat/unform';
 
 export const Container = styled.div`
   flex: 1;
@@ -9,7 +10,7 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const SignForm = styled.form`
+export const SignForm = styled(Form)`
   background: #36393f;
   border-radius: 5px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
