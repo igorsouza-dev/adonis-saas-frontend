@@ -29,6 +29,9 @@ export default function team(state = INITIAL_STATE, action) {
       case '@team/CLOSE_MODAL':
         draft.teamModalOpen = false;
         break;
+      case '@team/CREATE_TEAM_SUCCESS':
+        draft.teams = [...state.teams, action.payload.team];
+        break;
       default:
     }
   });

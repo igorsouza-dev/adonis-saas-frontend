@@ -35,3 +35,15 @@ export function closeModal() {
     payload: { teamModalOpen: false },
   };
 }
+export function createTeamRequest(name) {
+  return {
+    type: '@team/CREATE_TEAM_REQUEST',
+    payload: { name },
+  };
+}
+export function createTeamSuccess(team) {
+  return {
+    type: '@team/CREATE_TEAM_SUCCESS',
+    payload: { team },
+  };
+}

@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
+import * as Yup from 'yup';
 import {
   getTeamsRequest,
   selectTeam,
   openModal,
   closeModal,
+  createTeamRequest,
 } from 'store/modules/team/actions';
-
+import { signOut } from 'store/modules/auth/actions';
 import Modal from 'components/Modal';
-import { Container, TeamList, Team, NewTeam } from './styles';
 import Button from 'styles/components/Button';
+import { Container, TeamList, Team, NewTeam, Logout } from './styles';
+
+const schema = Yup.object().shape({
+  name: Yup.string().required('The name of the team is required'),
+});
 
 export default function TeamSwitcher() {
   const dispatch = useDispatch();
@@ -32,6 +38,12 @@ export default function TeamSwitcher() {
       dispatch(openModal());
     }
   }
+  function handleSubmit({ name }) {
+    dispatch(createTeamRequest(name));
+  }
+  function handleSignOut() {
+    dispatch(signOut());
+  }
   return (
     <Container>
       <TeamList>
@@ -48,18 +60,24 @@ export default function TeamSwitcher() {
           </Team>
         ))}
         <NewTeam onClick={handleNewTeam}>New</NewTeam>
+        
         {teamModalOpen && (
           <Modal>
             <h1>New Team</h1>
-            <Form onSubmit={() => {}}>
+            <Form onSubmit={handleSubmit} schema={schema}>
               <span>NAME</span>
               <Input type="text" name="name" />
-              <Button size="big" type="submit">SAVE</Button>
-              <Button size="small" color="gray" onClick={handleNewTeam}>CLOSE</Button>
+              <Button size="big" type="submit">
+                SAVE
+              </Button>
+              <Button size="small" color="gray" onClick={handleNewTeam}>
+                CLOSE
+              </Button>
             </Form>
           </Modal>
         )}
       </TeamList>
+      <Logout onClick={handleSignOut}>LOGOUT</Logout>
     </Container>
   );
 }
