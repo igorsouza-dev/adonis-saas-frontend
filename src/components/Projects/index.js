@@ -5,7 +5,10 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
 import Button from 'styles/components/Button';
+import Members from 'components/Members';
+
 import { getProjectsRequest, openModal, closeModal, createProjectRequest } from 'store/modules/project/actions';
+import { openModal as openModalMembers, closeModal as closeModalMembers } from 'store/modules/member/actions';
 import { Container, Project } from './styles';
 
 const schemaProject = Yup.object().shape({
@@ -15,6 +18,7 @@ function Projects({ team }) {
   const dispatch = useDispatch();
   const projects = useSelector(state => state.project.projects);
   const projectModalOpen = useSelector(state => state.project.projectModalOpen);
+  const memberModalOpen = useSelector(state => state.member.memberModalOpen);
 
   useEffect(() => {
     dispatch(getProjectsRequest());
@@ -25,6 +29,13 @@ function Projects({ team }) {
       dispatch(closeModal());
     } else {
       dispatch(openModal());
+    }
+  }
+  function handleModalMembers() {
+    if (memberModalOpen) {
+      dispatch(closeModalMembers());
+    } else {
+      dispatch(openModalMembers());
     }
   }
 
@@ -39,7 +50,7 @@ function Projects({ team }) {
         <h1>{team.name}</h1>
         <div>
           <Button onClick={handleNewProject}>+ New</Button>
-          <Button onClick={() => {}}>Members</Button>
+          <Button onClick={handleModalMembers}>Members</Button>
         </div>
       </header>
       {projects.map(project => (
@@ -62,6 +73,9 @@ function Projects({ team }) {
             </Form>
           </Modal>
         )}
+      {memberModalOpen && (
+        <Members />
+      )}
     </Container>
   );
 }
