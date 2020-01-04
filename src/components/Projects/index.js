@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from 'styles/components/Button';
+import { getProjectsRequest } from 'store/modules/project/actions';
 import { Container, Project } from './styles';
 
 function Projects({ team }) {
+  const dispatch = useDispatch();
+  const projects = useSelector(state => state.project.projects);
+  useEffect(() => {
+    dispatch(getProjectsRequest());
+  }, [team]);
+
   if (!team) return null;
   return (
     <Container>
@@ -14,21 +22,11 @@ function Projects({ team }) {
           <Button onClick={() => {}}>Members</Button>
         </div>
       </header>
-      <Project>
-        <p>Title</p>
-      </Project>
-      <Project>
-        <p>Title</p>
-      </Project>
-      <Project>
-        <p>Title</p>
-      </Project>
-      <Project>
-        <p>Title</p>
-      </Project>
-      <Project>
-        <p>Title</p>
-      </Project>
+      {projects.map(project => (
+        <Project key={project.id}>
+          <p>{project.title}</p>
+        </Project>
+      ))}
     </Container>
   );
 }
