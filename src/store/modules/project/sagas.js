@@ -3,7 +3,11 @@ import { toast } from 'react-toastify';
 
 import api from 'services/api';
 
-import { getProjectsSuccess } from './actions';
+import {
+  getProjectsSuccess,
+  closeModal,
+  createProjectSuccess,
+} from './actions';
 
 export function* getProjects() {
   try {
@@ -13,5 +17,19 @@ export function* getProjects() {
     toast.error('There was an error while fetching the projects');
   }
 }
+export function* createProject({ payload }) {
+  const { title } = payload;
+  try {
+    const response = yield call(api.post, 'projects', { title });
+    yield put(createProjectSuccess(response.data));
+    yield put(closeModal());
+    toast.success('Project created successfully.');
+  } catch (e) {
+    toast.error('There was an error while creating the project');
+  }
+}
 
-export default all([takeLatest('@project/GET_PROJECTS_REQUEST', getProjects)]);
+export default all([
+  takeLatest('@project/GET_PROJECTS_REQUEST', getProjects),
+  takeLatest('@project/CREATE_PROJECT_REQUEST', createProject),
+]);

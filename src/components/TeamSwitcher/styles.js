@@ -23,6 +23,7 @@ export const Team = styled.button`
     width: 50px;
     height: 50px;
 
+    border: ${props => (props.selected ? 'solid 3px #ddd' : '0')};
     &:hover {
       border-radius: 30%;
     }
