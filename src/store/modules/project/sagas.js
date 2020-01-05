@@ -1,19 +1,23 @@
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import api from 'services/api';
 
 import {
   getProjectsSuccess,
+  getProjectsFailure,
   closeModal,
   createProjectSuccess,
 } from './actions';
 
 export function* getProjects() {
+  const activeTeam = yield select(state => state.team.activeTeam);
+  if (!activeTeam) return;
   try {
     const response = yield call(api.get, 'projects');
     yield put(getProjectsSuccess(response.data));
   } catch (e) {
+    yield put(getProjectsFailure());
     toast.error('There was an error while fetching the projects');
   }
 }

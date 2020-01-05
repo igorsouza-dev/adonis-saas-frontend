@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal';
+import Can from 'components/Can';
 import Button from 'styles/components/Button';
 import Members from 'components/Members';
-
 import { getProjectsRequest, openModal, closeModal, createProjectRequest } from 'store/modules/project/actions';
 import { openModal as openModalMembers, closeModal as closeModalMembers } from 'store/modules/member/actions';
 import { Container, Project } from './styles';
@@ -49,9 +49,14 @@ function Projects({ team }) {
   return (
     <Container>
       <header>
+        {!team && (
+          <h1>Select a team on the sidebar</h1>
+        )}
         <h1>{team.name}</h1>
         <div>
-          <Button onClick={handleNewProject}>+ New</Button>
+          <Can checkPermission="projects_create">
+            <Button onClick={handleNewProject}>+ New</Button>
+          </Can>
           <Button onClick={handleModalMembers}>Members</Button>
         </div>
       </header>

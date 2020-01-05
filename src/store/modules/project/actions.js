@@ -9,6 +9,11 @@ export function getProjectsSuccess(projects) {
     payload: { projects },
   };
 }
+export function getProjectsFailure() {
+  return {
+    type: '@project/GET_PROJECTS_FAILURE',
+  };
+}
 export function createProjectRequest(title) {
   return {
     type: '@project/CREATE_PROJECT_REQUEST',

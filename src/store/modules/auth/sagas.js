@@ -1,10 +1,15 @@
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import api from 'services/api';
 import history from 'services/history';
 
-import { signInSuccess, signFailure, signInRequest } from './actions';
+import {
+  signInSuccess,
+  signFailure,
+  signInRequest,
+  getPermissionsSuccess,
+} from './actions';
 
 export function* signIn({ payload }) {
   try {
@@ -27,7 +32,6 @@ export function* signIn({ payload }) {
 }
 export function* signUp({ payload }) {
   try {
-    console.log(payload);
     const { name, email, password } = payload;
     yield call(api.post, 'users', {
       name,
@@ -62,14 +66,24 @@ export function setToken({ payload }) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
   }
 }
-
 export function signOut() {
   history.push('/');
 }
+export function* getPermissions() {
+  const team = yield select(state => state.team.activeTeam);
+  const signed = yield select(state => state.auth.signed);
 
+  if (!signed || !team) {
+    return null;
+  }
+  const response = yield call(api.get, 'permissions');
+  const { roles, permissions } = response.data;
+  yield put(getPermissionsSuccess(roles, permissions));
+}
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
+  takeLatest('@auth/GET_PERMISSIONS_REQUEST', getPermissions)
 ]);

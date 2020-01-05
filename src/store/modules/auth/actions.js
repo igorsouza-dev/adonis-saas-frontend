@@ -34,3 +34,17 @@ export function signOut() {
     type: '@auth/SIGN_OUT',
   };
 }
+export function getPermissionsRequest() {
+  return {
+    type: '@auth/GET_PERMISSIONS_REQUEST',
+  };
+}
+export function getPermissionsSuccess(roles, permissions) {
+  return {
+    type: '@auth/GET_PERMISSIONS_SUCCESS',
+    payload: {
+      roles,
+      permissions,
+    },
+  };
+}

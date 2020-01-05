@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import Select from 'components/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'components/Modal';
+import Can from 'components/Can';
 
 import Button from 'styles/components/Button';
 import {
@@ -50,29 +51,36 @@ function Members() {
   return (
     <Modal size="big">
       <h1>Members</h1>
-      <Invite onSubmit={handleInvitation} schema={schema}>
-        <Input
-          type="email"
-          placeholder="Insert the e-mail you wish to invite"
-          name="email"
-        />
-        <Button type="submit">Send Invitation</Button>
-      </Invite>
+      <Can checkPermission="invites_create">
+        <Invite onSubmit={handleInvitation} schema={schema}>
+          <Input
+            type="email"
+            placeholder="Insert the e-mail you wish to invite"
+            name="email"
+          />
+          <Button type="submit">Send Invitation</Button>
+        </Invite>
+      </Can>
       <Form>
         {loading && <span>Loading...</span>}
         <MembersList>
           {members.map(member => (
             <li key={member.id}>
               <strong>{member.user.name}</strong>
-              <Select
-                name="role"
-                multiple
-                value={member.roles}
-                options={roles}
-                getOptionValue={role => role.id}
-                getOptionLabel={role => role.name}
-                onChange={value => handleRoleChange(member.id, value)}
-              />
+              <Can checkRole="administrator">
+                {can => (
+                  <Select
+                    name="role"
+                    multiple
+                    isDisabled={!can}
+                    value={member.roles}
+                    options={roles}
+                    getOptionValue={role => role.id}
+                    getOptionLabel={role => role.name}
+                    onChange={value => handleRoleChange(member.id, value)}
+                  />
+                )}
+              </Can>
             </li>
           ))}
         </MembersList>

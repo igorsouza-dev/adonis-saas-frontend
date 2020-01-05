@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   token: null,
   signed: false,
   loading: false,
+  roles: [],
+  permissions: [],
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -26,6 +28,10 @@ export default function auth(state = INITIAL_STATE, action) {
         break;
       case '@auth/SIGN_UP_REQUEST':
         draft.loading = true;
+        break;
+      case '@auth/GET_PERMISSIONS_SUCCESS':
+        draft.permissions = action.payload.permissions;
+        draft.roles = action.payload.roles;
         break;
       default:
     }

@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import api from 'services/api';
 
+import { getPermissions } from 'store/modules/auth/sagas';
 import { getTeamsSuccess, createTeamSuccess, closeModal } from './actions';
 
 export function* getTeams() {
@@ -38,9 +39,11 @@ export function setHeaderTeam({ payload }) {
     api.defaults.headers.TEAM = activeTeam.slug;
   }
 }
+
 export default all([
   takeLatest('persist/REHYDRATE', setHeaderTeam),
   takeLatest('@team/GET_TEAMS_REQUEST', getTeams),
   takeLatest('@team/CREATE_TEAM_REQUEST', createTeam),
   takeLatest('@team/SELECT_TEAM', selectTeam),
+  takeLatest('@team/SELECT_TEAM', getPermissions),
 ]);
