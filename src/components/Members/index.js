@@ -34,6 +34,7 @@ function Members() {
       } catch (e) {}
     }
     getRoles();
+    // eslint-disable-next-line
   }, []);
 
   function handleModalMembers() {

@@ -23,6 +23,7 @@ function Projects({ team }) {
 
   useEffect(() => {
     dispatch(getProjectsRequest());
+    // eslint-disable-next-line
   }, [team]);
 
   function handleNewProject() {

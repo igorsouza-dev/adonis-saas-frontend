@@ -27,6 +27,7 @@ export function* signIn({ payload }) {
 }
 export function* signUp({ payload }) {
   try {
+    console.log(payload);
     const { name, email, password } = payload;
     yield call(api.post, 'users', {
       name,
@@ -36,15 +37,21 @@ export function* signUp({ payload }) {
     toast.success('Sign Up was a success!');
     yield put(signInRequest(email, password));
   } catch (err) {
-    let { message } = err;
-    if (err.response) {
-      if (err.response.data) {
-        if (err.response.data.error) {
-          message = err.response.data.error;
+    let message =
+      'Sign Up failed! Make sure your informed the right information.';
+    if (err) {
+      const { response } = err;
+      if (response) {
+        const { data } = response;
+        if (data) {
+          const { error } = data;
+          if (error) {
+            message = error.message;
+          }
         }
       }
     }
-    toast.error(`Sign Up failed! ${message}`);
+    toast.error(message);
     yield put(signFailure());
   }
 }

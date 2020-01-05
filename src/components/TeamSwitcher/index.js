@@ -26,6 +26,7 @@ export default function TeamSwitcher() {
 
   useEffect(() => {
     dispatch(getTeamsRequest());
+    // eslint-disable-next-line
   }, []);
 
   function handleSelectTeam(team) {

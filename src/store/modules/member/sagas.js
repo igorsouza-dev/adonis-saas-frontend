@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import api from 'services/api';
 
-import { getMembersSuccess, closeModal } from './actions';
+import { getMembersSuccess } from './actions';
 
 export function* getMembers() {
   try {

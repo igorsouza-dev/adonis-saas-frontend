@@ -31,6 +31,7 @@ export const SignForm = styled(Form)`
     line-height: 16px;
     font-weight: 600;
     margin-top: 15px;
+    text-align: left;
   }
   input {
     height: 40px;
