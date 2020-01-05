@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Form } from '@rocketseat/unform';
 
 export const MembersList = styled.ul`
   list-style: none;
@@ -21,4 +22,8 @@ export const MembersList = styled.ul`
       color: #666;
     }
   }
+`;
+export const Invite = styled(Form)`
+  padding-bottom: 20px;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
 `;
