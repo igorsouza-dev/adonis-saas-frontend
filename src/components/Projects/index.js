@@ -19,6 +19,7 @@ function Projects({ team }) {
   const projects = useSelector(state => state.project.projects);
   const projectModalOpen = useSelector(state => state.project.projectModalOpen);
   const memberModalOpen = useSelector(state => state.member.memberModalOpen);
+  const loading = useSelector(state => state.project.loading);
 
   useEffect(() => {
     dispatch(getProjectsRequest());
@@ -53,6 +54,7 @@ function Projects({ team }) {
           <Button onClick={handleModalMembers}>Members</Button>
         </div>
       </header>
+      {loading && <h1>Loading...</h1>}
       {projects.map(project => (
         <Project key={project.id}>
           <p>{project.title}</p>

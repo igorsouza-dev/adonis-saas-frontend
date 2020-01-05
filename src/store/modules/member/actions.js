@@ -23,3 +23,9 @@ export function closeModal() {
     payload: { memberModalOpen: false },
   };
 }
+export function updateMemberRolesRequest(memberId, roles) {
+  return {
+    type: '@member/UPDATE_MEMBER_ROLES_REQUEST',
+    payload: { memberId, roles },
+  };
+}

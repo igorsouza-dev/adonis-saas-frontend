@@ -25,6 +25,15 @@ export default function team(state = INITIAL_STATE, action) {
       case '@member/CLOSE_MODAL':
         draft.memberModalOpen = false;
         break;
+      case '@member/UPDATE_MEMBER_ROLES_REQUEST':
+        draft.members = state.members.map(member =>
+          member.id === action.payload.memberId
+            ? { ...member, roles: action.payload.roles }
+            : member
+        );
+        draft.roles = action.payload.roles;
+        draft.memberId = action.payload.memberId;
+        break;
       default:
     }
   });

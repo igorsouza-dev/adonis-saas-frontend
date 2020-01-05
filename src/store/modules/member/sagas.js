@@ -13,5 +13,17 @@ export function* getMembers() {
     toast.error('There was an error while fetching the members');
   }
 }
-
-export default all([takeLatest('@member/GET_MEMBERS_REQUEST', getMembers)]);
+export function* updateMember({ payload }) {
+  const { memberId, roles } = payload;
+  try {
+    yield call(api.put, `members/${memberId}`, {
+      roles: roles.map(role => role.id),
+    });
+  } catch (e) {
+    toast.error('There was an error while updating the roles of the user');
+  }
+}
+export default all([
+  takeLatest('@member/GET_MEMBERS_REQUEST', getMembers),
+  takeLatest('@member/UPDATE_MEMBER_ROLES_REQUEST', updateMember),
+]);
