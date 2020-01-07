@@ -10,7 +10,7 @@ import {
   createTeamRequest,
 } from 'store/modules/team/actions';
 
-import { signOut, getPermissionsRequest } from 'store/modules/auth/actions';
+import { signOut } from 'store/modules/auth/actions';
 import Modal from 'components/Modal';
 import Button from 'styles/components/Button';
 import { Container, TeamList, Team, NewTeam, Logout } from './styles';
@@ -27,7 +27,6 @@ export default function TeamSwitcher() {
 
   useEffect(() => {
     dispatch(getTeamsRequest());
-    dispatch(getPermissionsRequest());
     // eslint-disable-next-line
   }, []);
 
@@ -63,7 +62,6 @@ export default function TeamSwitcher() {
           </Team>
         ))}
         <NewTeam onClick={handleNewTeam}>New</NewTeam>
-        
         {teamModalOpen && (
           <Modal>
             <h1>New Team</h1>

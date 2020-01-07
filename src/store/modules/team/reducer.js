@@ -10,6 +10,9 @@ const INITIAL_STATE = {
 export default function team(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
+      case '@auth/SIGN_OUT':
+        Object.assign(draft, INITIAL_STATE);
+        break;
       case '@team/GET_TEAMS_REQUEST':
         draft.loading = true;
         break;

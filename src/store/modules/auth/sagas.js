@@ -1,9 +1,7 @@
 import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
-
 import api from 'services/api';
 import history from 'services/history';
-
 import {
   signInSuccess,
   signFailure,
@@ -85,5 +83,5 @@ export default all([
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
-  takeLatest('@auth/GET_PERMISSIONS_REQUEST', getPermissions)
+  takeLatest('@auth/GET_PERMISSIONS_REQUEST', getPermissions),
 ]);

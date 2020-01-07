@@ -49,9 +49,6 @@ function Projects({ team }) {
   return (
     <Container>
       <header>
-        {!team && (
-          <h1>Select a team on the sidebar</h1>
-        )}
         <h1>{team.name}</h1>
         <div>
           <Can checkPermission="projects_create">

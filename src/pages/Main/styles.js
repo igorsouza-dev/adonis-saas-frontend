@@ -5,3 +5,6 @@ export const Container = styled.div`
   display: flex;
   align-items: stretch;
 `;
+export const NoTeamTitle = styled.h1`
+  padding: 20px;
+`;
