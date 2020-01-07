@@ -1,6 +1,6 @@
 # Adonis SaaS Project Manager - Frontend
 
-<div alig="center">
+<div align="center">
   <img src="/demo.gif" />
 </div>
 
